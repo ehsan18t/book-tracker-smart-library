@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Papa from "papaparse";
-
-interface Book {
-  Date: string;
-  Time: string;
-  ID: string;
-  Shelf: string;
-  Row: string;
-}
+import { Book } from "../type";
+import BookView from "./BookView";
 
 interface GoogleSheetReaderProps {
   sheetId: string;
@@ -22,7 +16,9 @@ const GoogleSheetReader: React.FC<GoogleSheetReaderProps> = ({ sheetId }) => {
   useEffect(() => {
     if (books) {
       const filteredBooks = books.filter((book) => {
-        return book.ID.toLowerCase().includes(search.toLowerCase());
+        // don't add book that dont have a title
+        if (!book.Title) return false;
+        return book.Title.toLowerCase().includes(search.toLowerCase());
       });
       setFilteredBooks(filteredBooks);
     }
@@ -55,24 +51,22 @@ const GoogleSheetReader: React.FC<GoogleSheetReaderProps> = ({ sheetId }) => {
   return (
     <div>
       {/* search */}
-      <div>
+      <div className="w-full p-7 h-full">
         <input
-          className=""
+          className="w-full flex justify-center items-center px-6 py-3 text-sm text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
           type="text"
-          placeholder="Search..."
+          placeholder="Search Book..."
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
       {loading ? (
         <p>Loading data...</p>
       ) : (
-        <ul>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4 md:px-6">
           {filteredBooks.map((book, index) => (
-            <li key={index}>
-              {book.ID} ({book.Shelf}) - {book.Row}
-            </li>
+            <BookView book={book} key={index} />
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

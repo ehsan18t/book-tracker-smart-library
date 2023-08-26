@@ -1,6 +1,8 @@
 export interface Book {
-    id: string;
-    title?: string;
-    date: string;
-    time: string;
-}
+    Date: string;
+    ID: string;
+    Shelf: string;
+    Row: string;
+    Title: string;
+    Cover?: string;
+  }
