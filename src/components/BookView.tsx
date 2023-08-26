@@ -1,4 +1,6 @@
 import { Book } from "../type";
+import { BsBookshelf } from "react-icons/bs";
+import { AiOutlineInsertRowBelow } from "react-icons/ai";
 
 interface Props {
   book: Book;
@@ -16,14 +18,15 @@ const BookView = ({ book }: Props) => {
         <div className="font-semibold">{book.Title}</div>
 
         <div className="flex py-5 justify-between text-xs text-gray-600 border-b-[1px]">
-          <div className="bg-red-200 ring-1 ring-red-500 rounded-3xl px-2 py-1">
-            Shelf: {book.Shelf}
+          <div className="flex gap-2 items-center ring-1 ring-amber-500 rounded-3xl px-2 py-1">
+            <BsBookshelf /> Shelf: {book.Shelf}
           </div>
-          <div className="bg-green-200 ring-1 ring-green-500 rounded-3xl px-2 py-1">
+          <div className="flex gap-2 items-center ring-1 ring-green-500 rounded-3xl px-2 py-1">
+            <AiOutlineInsertRowBelow />
             Row: {book.Row}
           </div>
         </div>
-        <div className=" pt-3 flex justify-center items-center text-center px-5 text-xs text-slate-500">
+        <div className="pt-3 flex justify-center items-center text-center px-5 text-xs text-slate-500">
           Updated: {book.Date}
         </div>
       </div>
